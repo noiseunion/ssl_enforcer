@@ -8,9 +8,9 @@ Gem::Specification.new do |s|
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["JD"]
+  s.authors = ["JD Hendrickson"]
   s.date = %q{2012-03-27}
-  s.description = %q{}
+  s.description = %q{Simple Rack middleware for forcing SSL on specific subdomains of an application.}
   s.email = %q{jd@digitalopera.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
