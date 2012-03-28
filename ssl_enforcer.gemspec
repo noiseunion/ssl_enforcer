@@ -4,17 +4,17 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{ssl_enforcer}
-  s.version = "0.1.0"
+  s.name = "ssl_enforcer"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["JD Hendrickson"]
-  s.date = %q{2012-03-27}
-  s.description = %q{Simple Rack middleware for forcing SSL on specific subdomains of an application.}
-  s.email = %q{jd@digitalopera.com}
+  s.date = "2012-03-28"
+  s.description = "Simple Rack middleware for forcing SSL on specific subdomains of an application."
+  s.email = "jd@digitalopera.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".document",
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "lib/ssl_enforcer.rb",
@@ -30,11 +30,11 @@ Gem::Specification.new do |s|
     "spec/ssl_enforcer_spec.rb",
     "ssl_enforcer.gemspec"
   ]
-  s.homepage = %q{http://github.com/noiseunion/ssl_enforcer}
+  s.homepage = "http://github.com/noiseunion/ssl_enforcer"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.0}
-  s.summary = %q{Force SSL for specific subdomains of your application}
+  s.rubygems_version = "1.8.18"
+  s.summary = "Force SSL for specific subdomains of your application"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
