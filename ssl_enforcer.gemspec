@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ssl_enforcer"
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["JD Hendrickson"]
-  s.date = "2012-03-28"
+  s.date = "2012-04-09"
   s.description = "Simple Rack middleware for forcing SSL on specific subdomains of an application."
   s.email = "jd@digitalopera.com"
   s.extra_rdoc_files = [
@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/noiseunion/ssl_enforcer"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.18"
+  s.rubygems_version = "1.8.21"
   s.summary = "Force SSL for specific subdomains of your application"
 
   if s.respond_to? :specification_version then
