@@ -26,7 +26,14 @@ class SSLEnforcer
     tld       = get_top_level_domain(env["SERVER_NAME"])
     subdomain = get_subdomain(env["SERVER_NAME"], tld)
     scheme    = env["rack.url_scheme"]
-    return scheme == "https" || @subdomains.index(subdomain).nil?
+    
+    # If the subdomain is in the list of HTTPS enforced subs, check for HTTPS
+    # otherwise, return true
+    if @subdoamins.index(subdomain).nil?
+      return true
+    else
+      return scheme == "https"
+    end
   end
 
   # return the subdomain regardless of how many levels deep it is
