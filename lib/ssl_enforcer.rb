@@ -13,7 +13,7 @@ class SSLEnforcer
     if url_is_ok?(env)
       @app.call(env)
     else # if the domain is NOT currently using SSL then we need to redirect the request
-      req = Rack::Request.new(env)
+      req     = Rack::Request.new(env)
       headers = { "Location" => req.url.gsub(/^http:/, "https:") }
 
       [301, headers, []]
@@ -25,7 +25,11 @@ class SSLEnforcer
   def url_is_ok?(env)
     tld       = get_top_level_domain(env["SERVER_NAME"])
     subdomain = get_subdomain(env["SERVER_NAME"], tld)
-    scheme    = env["rack.url_scheme"]
+    
+    # Hack to deal with heroku redirect issues.
+    # http://rack.lighthouseapp.com/projects/22435/tickets/101
+    scheme    = "https" if env["SERVER_PORT"] == "443"
+    scheme    = env["HTTP_X_FORWARDED_PROTO"] if env["HTTP_X_FORWARDED_PROTO"]
     
     # If the subdomain is in the list of HTTPS enforced subs, check for HTTPS
     # otherwise, return true
