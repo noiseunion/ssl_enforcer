@@ -54,7 +54,7 @@ class SSLEnforcer::Enforcer
     ## If the option was not passed, then we must assume to change all
     ## subdomains NOT responded to by @exceptions
     if @only.empty?
-      return scheme == :https
+      return scheme.downcase.to_sym == :https
     else
       return true
     end
