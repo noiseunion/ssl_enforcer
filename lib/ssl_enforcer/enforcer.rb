@@ -35,14 +35,18 @@ class SSLEnforcer::Enforcer
 
     # If the "only" and or "exceptions" options have not been passed, then
     # we want to force SSL on ALL subdomains
+    Rails.logger.debug "="*60
+    Rails.logger.debug "@only: [ #{@only.join(",") } ]"
+    Rails.logger.debug "@exceptions: [ #{@exceptions.join(",") } ]"
+    Rails.logger.debug "="*60
     return false if @only.empty? && @exceptions.empty?
+
+    ## Return true if the subdomain is in in the "except" list
+    return true if @exceptions.include?(subdomain)
 
     ## Return the current scheme test restuls if the
     ## subdomain is in the "only" list
     return scheme == :https if @only.include?(subdomain)
-
-    ## Return true if the subdomain is in in the "except" list
-    return true if @exceptions.include?(subdomain)
   end
 
   # return the subdomain regardless of how many levels deep it is
