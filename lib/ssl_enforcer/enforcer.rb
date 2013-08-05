@@ -16,7 +16,7 @@ class SSLEnforcer::Enforcer
     else
       # if the domain is NOT currently using SSL then we need to redirect the request
       req     = Rack::Request.new(env)
-      headers = { "Location" => req.url.gsub(/^http:/, "https:") }
+      headers = { "Location" => req.url.gsub(/^http:/, "https:"), "Content-Type"=>"text/plain" }
 
       [301, headers, []]
     end
@@ -30,8 +30,8 @@ class SSLEnforcer::Enforcer
 
     # Hack to deal with heroku redirect issues.
     # http://rack.lighthouseapp.com/projects/22435/tickets/101
-    scheme    = "https" if env["SERVER_PORT"] == "443"
-    scheme    = env["HTTP_X_FORWARDED_PROTO"] if env["HTTP_X_FORWARDED_PROTO"]
+    scheme    = (env["SERVER_PORT"] == "443") ? :https : :http
+    #scheme    = env["HTTP_X_FORWARDED_PROTO"] if env["HTTP_X_FORWARDED_PROTO"]
 
     # If the "only" and or "exceptions" options have not been passed, then
     # we want to force SSL on ALL subdomains
@@ -39,7 +39,7 @@ class SSLEnforcer::Enforcer
 
     ## Return the current scheme test restuls if the
     ## subdomain is in the "only" list
-    return scheme == "https" if @only.include?(subdomain)
+    return scheme == :https if @only.include?(subdomain)
 
     ## Return true if the subdomain is in in the "except" list
     return true if @exceptions.include?(subdomain)
