@@ -36,6 +36,7 @@ class SSLEnforcer::Enforcer
     # http://rack.lighthouseapp.com/projects/22435/tickets/101
     scheme    = (env["SERVER_PORT"] == "443") ? :https : :http
     scheme    = env["HTTP_X_FORWARDED_PROTO"] if env["HTTP_X_FORWARDED_PROTO"]
+    scheme    = scheme.downcase.to_sym
 
     # If the "only" and or "exceptions" options have not been passed, then
     # we want to force SSL on ALL subdomains
@@ -54,7 +55,7 @@ class SSLEnforcer::Enforcer
     ## If the option was not passed, then we must assume to change all
     ## subdomains NOT responded to by @exceptions
     if @only.empty?
-      return scheme.downcase.to_sym == :https
+      return scheme == :https
     else
       return true
     end
