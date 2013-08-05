@@ -1,8 +1,4 @@
-source "http://rubygems.org"
+source 'https://rubygems.org'
 
-group :development do
-  gem "rspec", "~> 2.3.0"
-  gem "bundler", "~> 1.0.0"
-  gem "jeweler", "~> 1.6.4"
-  gem "simplecov", ">= 0"
-end
+# Specify your gem's dependencies in ssl_enforcer.gemspec
+gemspec

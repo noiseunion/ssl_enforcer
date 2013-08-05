@@ -1,16 +1,16 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ssl_enforcer/version'
+require './version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "ssl_enforcer"
-  gem.version       = SslEnforcer::VERSION
+  gem.name          = "."
+  gem.version       = .::VERSION
   gem.authors       = ["JD Hendrickson"]
   gem.email         = ["jd@digitalopera.com"]
-  gem.description   = "Simple Rack middleware for forcing SSL on specific subdomains of an application."
-  gem.summary       = "Simple Rack middleware for forcing SSL on specific subdomains of an application."
-  gem.homepage      = "https://github.com/digitalopera/ssl_enforcer/"
+  gem.description   = %q{TODO: Write a gem description}
+  gem.summary       = %q{TODO: Write a gem summary}
+  gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
