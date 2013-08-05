@@ -7,6 +7,10 @@ class SSLEnforcer::Enforcer
     @app        = app
     @only       = @options[:only] || []
     @exceptions = @options[:except] || []
+
+    ## Convert @only and @exception values to symbols
+    @exceptions.map!{ |sd| sd.downcase.to_sym }
+    @only.map!{ |sd| sd.downcase.to_sym }
   end
 
   def call(env)
@@ -26,7 +30,7 @@ class SSLEnforcer::Enforcer
 
   def url_is_ok?(env)
     tld       = get_top_level_domain(env["SERVER_NAME"])
-    subdomain = get_subdomain(env["SERVER_NAME"], tld)
+    subdomain = get_subdomain(env["SERVER_NAME"], tld).downcase.to_sym
 
     # Hack to deal with heroku redirect issues.
     # http://rack.lighthouseapp.com/projects/22435/tickets/101
@@ -35,19 +39,6 @@ class SSLEnforcer::Enforcer
 
     # If the "only" and or "exceptions" options have not been passed, then
     # we want to force SSL on ALL subdomains
-    Rails.logger.debug "="*60
-    Rails.logger.debug "@only: [ #{@only.join(",") } ]"
-    Rails.logger.debug "@exceptions: [ #{@exceptions.join(",") } ]"
-    Rails.logger.debug "subdomain: #{subdomain}"
-    Rails.logger.debug "Scheme: #{scheme.to_s}"
-    Rails.logger.debug "TLD: #{tld}"
-    Rails.logger.debug "="*30
-    Rails.logger.debug "Force all? #{@only.empty? && @exceptions.empty?}"
-    Rails.logger.debug "="*30
-    Rails.logger.debug "in exceptions? #{@exceptions.include?(subdomain)}"
-    Rails.logger.debug "="*30
-    Rails.logger.debug "in only? #{@only.include?(subdomain)}"
-    Rails.logger.debug "="*60
     return false if @only.empty? && @exceptions.empty?
 
     ## Return true if the subdomain is in in the "except" list
@@ -56,6 +47,17 @@ class SSLEnforcer::Enforcer
     ## Return the current scheme test restuls if the
     ## subdomain is in the "only" list
     return scheme == :https if @only.include?(subdomain)
+
+    ## If the subdomain is not found in either @exceptions || @only
+    ## we must first check to see if the "only" option was passed.
+    ## If so, then we will return true and not change the request.
+    ## If the option was not passed, then we must assume to change all
+    ## subdomains NOT responded to by @exceptions
+    if @only.empty?
+      return scheme == :https
+    else
+      return true
+    end
   end
 
   # return the subdomain regardless of how many levels deep it is
