@@ -38,6 +38,15 @@ class SSLEnforcer::Enforcer
     Rails.logger.debug "="*60
     Rails.logger.debug "@only: [ #{@only.join(",") } ]"
     Rails.logger.debug "@exceptions: [ #{@exceptions.join(",") } ]"
+    Rails.logger.debug "subdomain: #{subdomain}"
+    Rails.logger.debug "Scheme: #{scheme.to_s}"
+    Rails.logger.debug "TLD: #{tld}"
+    Rails.logger.debug "="*30
+    Rails.logger.debug "Force all? #{@only.empty? && @exceptions.empty?}"
+    Rails.logger.debug "="*30
+    Rails.logger.debug "in exceptions? #{@exceptions.include?(subdomain)}"
+    Rails.logger.debug "="*30
+    Rails.logger.debug "in only? #{@only.include?(subdomain)}"
     Rails.logger.debug "="*60
     return false if @only.empty? && @exceptions.empty?
 
