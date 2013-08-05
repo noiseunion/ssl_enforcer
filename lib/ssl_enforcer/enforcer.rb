@@ -3,10 +3,10 @@ require "rack/request"
 
 class SSLEnforcer::Enforcer
   def initialize(app, options = {})
-    @options              = { :subdomain => [] }.merge(options)
-    @app                  = app
-    @subdomains           = @options[:subdomain] || []
-    @subdomain_exceptions = @options[:subdomain_exceptions] || []
+    @options    = { :only => [] }.merge(options)
+    @app        = app
+    @only       = @options[:only] || []
+    @exceptions = @options[:except] || []
   end
 
   def call(env)
@@ -33,13 +33,16 @@ class SSLEnforcer::Enforcer
     scheme    = "https" if env["SERVER_PORT"] == "443"
     scheme    = env["HTTP_X_FORWARDED_PROTO"] if env["HTTP_X_FORWARDED_PROTO"]
 
-    # If the subdomain is in the list of HTTPS enforced subs, check for HTTPS
-    # otherwise, return true
-    if @subdomains.index(subdomain).nil?
-      return true
-    else
-      return scheme == "https"
-    end
+    # If the "only" and or "exceptions" options have not been passed, then
+    # we want to force SSL on ALL subdomains
+    return false if @only.empty? && @exceptions.empty?
+
+    ## Return the current scheme test restuls if the
+    ## subdomain is in the "only" list
+    return scheme == "https" if @only.include?(subdomain)
+
+    ## Return true if the subdomain is in in the "except" list
+    return true if @exceptions.include?(subdomain)
   end
 
   # return the subdomain regardless of how many levels deep it is
