@@ -1,3 +1,6 @@
+require "rack"
+require "rack/request"
+
 module SSLEnforcer
   class Enforce
     def initialize(app, options = {})
