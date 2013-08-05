@@ -35,7 +35,7 @@ class SSLEnforcer::Enforcer
     # Hack to deal with heroku redirect issues.
     # http://rack.lighthouseapp.com/projects/22435/tickets/101
     scheme    = (env["SERVER_PORT"] == "443") ? :https : :http
-    #scheme    = env["HTTP_X_FORWARDED_PROTO"] if env["HTTP_X_FORWARDED_PROTO"]
+    scheme    = env["HTTP_X_FORWARDED_PROTO"] if env["HTTP_X_FORWARDED_PROTO"]
 
     # If the "only" and or "exceptions" options have not been passed, then
     # we want to force SSL on ALL subdomains
