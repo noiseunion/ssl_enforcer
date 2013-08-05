@@ -39,8 +39,6 @@ config.middleware.use SSLEnforcer::Enforcer, :only => [:secure, :checkout, :prot
 
 This will enforce SSL connections for "secure.mydomain.com", as well as "checkout.mydomain.com" and "protected.mydomain.com".
 
-**NOTE** The `only` option must be passed an array of subdomains.  When set, all domains will be allowed standard HTTP connection except the subdomains identified by the `only` option.
-
 ## Subdomain Exceptions
 
 You can specify subdomain exceptions that should not be forced to HTTPS.  This can be handy in the event that you application supports "wildcard" subdomains.  You may want to force SSL
@@ -52,6 +50,8 @@ config.middleware.use SSLEnforcer::Enforcer, :except => [:www]
 ```
 
 SSL Enforcer will not provide SSL certificates.  You should first configure your server environment to properly support SSL connections before using SSL Enforcer.
+
+**NOTE** The `only` and `except` options must be passed an array.
 
 ## Bug Reports
 
