@@ -1,3 +1,3 @@
-module SslEnforcer
+module SSLEnforcer
   VERSION = "0.2.0"
 end

@@ -1,4 +1,4 @@
-# SslEnforcer
+# SSLEnforcer
 
 TODO: Write a gem description
 

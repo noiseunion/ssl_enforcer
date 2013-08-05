@@ -1,5 +1,5 @@
-module SslEnforcer
-  class SSLEnforcer
+module SSLEnforcer
+  class SSLEnforce
     def initialize(app, options = {})
       @options              = { :subdomain => [] }.merge(options)
       @app                  = app
