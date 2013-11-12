@@ -6,6 +6,7 @@ require 'ssl_enforcer/version'
 Gem::Specification.new do |gem|
   gem.name          = "ssl_enforcer"
   gem.version       = SSLEnforcer::VERSION
+  gem.license       = 'MIT'
   gem.authors       = ["JD Hendrickson"]
   gem.email         = ["jd@digitalopera.com"]
   gem.description   = "Simple Rack middleware for forcing SSL on specific subdomains of an application."
